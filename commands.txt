@@ -1,0 +1,22 @@
+read 1A
+read 1A
+write 2B 3F
+write 2C 5D
+read 2C
+read 00
+write FF 9A
+read 10
+read 20
+read 30
+read 40
+read 01
+read 02
+read 03
+write 4E AA
+read 5F
+read 2D
+write 2D CC
+read 2D
+read 3A
+write 3A BB
+read 4B
