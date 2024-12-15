@@ -42,6 +42,11 @@ public class CommandsPanelManager {
             String operation = splitCommand[0];
             String address = splitCommand[1];
 
+            if (!Checker.isValidAddress(address)) {
+                JOptionPane.showMessageDialog(panel, "Address out of bounds. Commmand: " + command);
+                throw new IllegalStateException("Address out of bounds. Commmand: " + command);
+            }
+
             if (operation.equals("read")) {
                 manager.readOperation(address);
                 manager.setCachePanel();

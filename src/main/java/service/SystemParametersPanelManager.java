@@ -5,6 +5,7 @@ import entity.SystemParameters;
 import util.*;
 import view.SystemParametersPanel;
 
+import javax.swing.*;
 import java.util.Objects;
 
 public class SystemParametersPanelManager {
@@ -43,13 +44,19 @@ public class SystemParametersPanelManager {
      * Handles the "Start" button functionality to initialize the simulation.
      */
     private void startSimulation() {
-            applySystemParameters();
-            manager.initializeSimulation();
-            panel.getLogArea().setText(SystemParameters.getInstance().getFirstCalculation());
+        applySystemParameters();
 
-            step = 1;
-            state = panel.getExplainCheckBox().isSelected() ? SimulationState.EXPLAIN : SimulationState.IN_PROGRESS;
-            panel.getNextButton().setText(panel.getExplainCheckBox().isSelected() ? "Next" : "Reset Simulation");
+        if (!Checker.isCacheSizeValid()) {
+            JOptionPane.showMessageDialog(panel, "Cache size is smaller than main memory size.");
+            throw new IllegalStateException("Cache size is smaller than main memory size.");
+        }
+
+        manager.initializeSimulation();
+        panel.getLogArea().setText(SystemParameters.getInstance().getFirstCalculation());
+
+        step = 1;
+        state = panel.getExplainCheckBox().isSelected() ? SimulationState.EXPLAIN : SimulationState.IN_PROGRESS;
+        panel.getNextButton().setText(panel.getExplainCheckBox().isSelected() ? "Next" : "Reset Simulation");
     }
 
     /**

@@ -1,15 +1,16 @@
 package service;
 
 import entity.*;
+import util.Checker;
 import view.MemoryAccessPanel;
-import view.SimulationMessagesPanel;
+
+import javax.swing.*;
 
 public class MemoryAccessManager {
     private MemoryAccessPanel panel;
     private Manager manager;
     private int missCount = 0;
     private int hitCount = 0;
-    private SimulationState state = SimulationState.START;
 
     public MemoryAccessManager(MemoryAccessPanel panel, Manager manager) {
         this.panel = panel;
@@ -67,15 +68,30 @@ public class MemoryAccessManager {
         panel.getFlushButton().setEnabled(true);
     }
 
-    private String getReadAddress() {
+    private String getReadAddress() throws IllegalStateException {
+        if (!Checker.isValidAddress(panel.getAddressField1().getText())) {
+            JOptionPane.showMessageDialog(panel, "Address out of bounds.");
+            throw new IllegalStateException("Address out of bounds.");
+        }
+
         return panel.getAddressField1().getText();
     }
 
-    private String getWriteAddress() {
+    private String getWriteAddress() throws IllegalStateException {
+        if (!Checker.isValidAddress(panel.getAddressField2().getText())) {
+            JOptionPane.showMessageDialog(panel, "Address out of bounds.");
+            throw new IllegalStateException("Address out of bounds.");
+        }
+
         return panel.getAddressField2().getText();
     }
 
     private String getByte() {
+        if (!Checker.isByte(panel.getByteField().getText())) {
+            JOptionPane.showMessageDialog(panel, "Byte not valid.");
+            throw new NumberFormatException("Byte not valid.");
+        }
+
         return panel.getByteField().getText();
     }
 
