@@ -198,22 +198,6 @@ public class MemoryAccessPanel extends JPanel {
         return byteField;
     }
 
-    public JLabel getCacheHitsLabel() {
-        return cacheHitsLabel;
-    }
-
-    public JLabel getCacheMissesLabel() {
-        return cacheMissesLabel;
-    }
-
-    public JLabel getCacheHitsNumberLabel() {
-        return cacheHitsNumberLabel;
-    }
-
-    public JLabel getCacheMissesNumberLabel() {
-        return cacheMissesNumberLabel;
-    }
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("Memory Access Panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,5 +1,6 @@
 package service;
 
+import entity.CacheResult;
 import entity.MemoryCell;
 import util.Checker;
 import view.CommandsPanel;
@@ -12,9 +13,11 @@ import java.nio.file.Files;
 public class CommandsPanelManager {
     private Manager manager;
     private CommandsPanel panel;
+    private MemoryAccessManager memoryAccessManager;
 
-    public CommandsPanelManager(CommandsPanel panel, Manager manager) {
+    public CommandsPanelManager(CommandsPanel panel, Manager manager, MemoryAccessManager memoryAccessManager) {
         this.manager = manager;
+        this.memoryAccessManager = memoryAccessManager;
         this.panel = panel;
         buttonFunctionality();
     }
@@ -48,7 +51,11 @@ public class CommandsPanelManager {
             }
 
             if (operation.equals("read")) {
-                manager.readOperation(address);
+                if ((manager.readOperation(address) != CacheResult.HIT)) {
+                    memoryAccessManager.incrementMisses();
+                } else {
+                    memoryAccessManager.incrementHits();
+                }
                 manager.setCachePanel();
             } else {
                 MemoryCell data = new MemoryCell(splitCommand[2]);
@@ -60,7 +67,7 @@ public class CommandsPanelManager {
     }
 
     private void loadFile() {
-        File file = new File("commands.txt");
+        File file = new File("write_through.txt");
 
         try {
             String commands = Files.readString(file.toPath()).trim();

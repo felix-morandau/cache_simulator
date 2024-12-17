@@ -15,7 +15,13 @@ public class Checker {
     }
 
     public static boolean isValidAddress(String hexAddress) {
-        int decAddress = Integer.parseInt(hexAddress, 16);
+        Pattern pattern = Pattern.compile("^[0-9A-Fa-f]+$");
+        Matcher matcher = pattern.matcher(hexAddress);
+
+        int decAddress = 10000;
+        if (matcher.matches()) {
+            decAddress = Integer.parseInt(hexAddress, 16);
+        }
 
         return decAddress < SystemParameters.getInstance().getMainMemorySize();
     }

@@ -1,0 +1,20 @@
+read 00
+read 09
+read 02
+read 27
+write 26 ff
+write 27 ff
+read 30
+read 80
+write 47 ff
+write 26 aa
+read 47
+read 57
+read 67
+write 80 ff
+read 56
+read 78
+read 23
+read 87
+read 90
+read 91

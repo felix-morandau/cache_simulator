@@ -15,6 +15,7 @@ public class MemoryAccessManager {
     public MemoryAccessManager(MemoryAccessPanel panel, Manager manager) {
         this.panel = panel;
         this.manager = manager;
+        disableButtons();
         buttonFunctionality();
     }
 
@@ -24,7 +25,7 @@ public class MemoryAccessManager {
         panel.getFlushButton().addActionListener(_ -> flushFunctionality());
     }
 
-    private void readFunctionality() {
+    protected void readFunctionality() {
         CacheResult operationResult = manager.readOperation(getReadAddress());
         manager.setCachePanel();
 
@@ -38,7 +39,7 @@ public class MemoryAccessManager {
         panel.updateLabels(hitCount, missCount);
     }
 
-    private void writeFunctionality() {
+    protected void writeFunctionality() {
         CacheResult operationResult = manager.writeOperation(getWriteAddress(), new MemoryCell(getByte()));
         manager.setCachePanel();
         manager.setMainMemory();
@@ -54,6 +55,15 @@ public class MemoryAccessManager {
         manager.initializeSimulation();
         missCount = 0;
         hitCount = 0;
+    }
+
+    public void initializeSimulation() {
+        enableButtons();
+        missCount = 0;
+        hitCount = 0;
+
+        panel.updateAddress(new Address(SystemParameters.getInstance().getAddressTemplate(), ""));
+        panel.updateLabels(missCount, hitCount);
     }
 
     public void disableButtons() {
@@ -93,6 +103,16 @@ public class MemoryAccessManager {
         }
 
         return panel.getByteField().getText();
+    }
+
+    public void incrementHits() {
+        hitCount++;
+        panel.updateLabels(hitCount, missCount);
+    }
+
+    public void incrementMisses() {
+        missCount++;
+        panel.updateLabels(hitCount, missCount);
     }
 
 }

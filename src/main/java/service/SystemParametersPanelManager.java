@@ -10,15 +10,17 @@ import java.util.Objects;
 
 public class SystemParametersPanelManager {
 
+    private final MemoryAccessManager memoryAccessManager;
     private final SystemParametersPanel panel;
     private SimulationState state = SimulationState.START;
     private int step = 1;
     private SystemParameters parameters;
     private Manager manager;
 
-    public SystemParametersPanelManager(SystemParametersPanel panel, Manager manager) {
+    public SystemParametersPanelManager(SystemParametersPanel panel, Manager manager, MemoryAccessManager memoryAccessManager) {
         this.panel = panel;
         this.manager = manager;
+        this.memoryAccessManager = memoryAccessManager;
         buttonFunctionality();
     }
 
@@ -52,6 +54,7 @@ public class SystemParametersPanelManager {
         }
 
         manager.initializeSimulation();
+        memoryAccessManager.initializeSimulation();
         panel.getLogArea().setText(SystemParameters.getInstance().getFirstCalculation());
 
         step = 1;

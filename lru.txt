@@ -1,0 +1,6 @@
+read 00
+read 10
+read 20
+read 00
+read 30
+read 40

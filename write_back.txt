@@ -1,0 +1,6 @@
+//parameters: 10, 32, 4, 2, wb, lru
+read 00
+read 10
+write 03 ff
+read 20
+read 30
